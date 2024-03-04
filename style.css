@@ -1,0 +1,23 @@
+body{
+	text-align: center;
+	margin: auto;
+	background-color: black;
+	font-family: FreeMono, monospace;
+	color: white;
+}
+h1{
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	color: orange;
+}
+img{
+	filter: invert(1)
+}
+footer{
+	text-align: end;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+.darkpack{
+	filter: none;
+}
