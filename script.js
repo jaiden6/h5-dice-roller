@@ -9,3 +9,25 @@ function rollDice(pool){
 	}
 	return result;
 }
+
+function increasePool(){
+	pool.innerText = parseInt(pool.innerText) + 1;
+}
+
+function decreasePool(){
+	if(parseInt(pool.innerText) != 1){
+		pool.innerText = parseInt(pool.innerText) - 1;
+	}
+}
+
+function increaseDesperation(){
+	if(parseInt(desperation.innerText) != 5){
+		desperation.innerText = parseInt(desperation.innerText) + 1;
+	}
+}
+
+function decreaseDesperation(){
+	if(parseInt(desperation.innerText) != 1){
+		desperation.innerText = parseInt(desperation.innerText) - 1;
+	}
+}
