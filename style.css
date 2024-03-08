@@ -16,6 +16,9 @@ button{
 	width: 10em;
 	height: 5em;
 }
+table{
+	width: 100%;
+}
 footer{
 	text-align: end;
 	position: absolute;
@@ -23,7 +26,8 @@ footer{
 	right: 0;
 }
 .icon{
+	align-self: center;
 	width: auto;
-	height: 25px;
+	height: 3em;
 	filter: invert(1);
 }

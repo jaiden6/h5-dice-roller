@@ -1,13 +1,29 @@
-function die(){
-	return Math.floor(Math.random() * 10)
-}
-
 function rollDice(pool){
 	const result = [];
-	for (let i = 0; i < pool; i++) {
-		result.push(die());
+	if(applyDesperation.checked){
+		pool = pool + parseInt(desperation.innerText);
+	}
+	for(let i = 0; i < pool; i++){
+		result.push(Math.floor(Math.random() * 10));
 	}
 	return result;
+}
+
+function displayRoll(result){
+	const cells = document.querySelectorAll("td");
+	let desperationCount = 0;
+	if(applyDesperation.checked){
+		desperationCount = parseInt(desperation.innerText);
+	}
+	for(let i = 0; i < cells.length; i++){
+		cells[i].remove();
+	}
+	for(let i = 0; i < desperationCount && result.length != 0; i++){
+
+	}
+	while(result.length != 0){
+
+	}
 }
 
 function increasePool(){
