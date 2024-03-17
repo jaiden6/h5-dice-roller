@@ -10,12 +10,12 @@
 	<body>
 		<h1>Hunter: the Reckoning Dice Roller</h1>
 		<p>Dice Pool:</p>
-		<button onclick="decreasePool()"><strong>-</strong></button> <h2 id="pool">1</h2> <button onclick="increasePool()"><strong>+</strong></button>
+		<button onclick="if(parseInt(pool.innerText) != 1){pool.innerText = parseInt(pool.innerText) - 1;}"><strong>-</strong></button> <h2 id="pool">1</h2> <button onclick="pool.innerText = parseInt(pool.innerText) + 1;"><strong>+</strong></button>
 		<p>Desperation Level:</p>
-		<button onclick="decreaseDesperation()"><strong>-</strong></button> <h2 id="desperation">1</h2> <button onclick="increaseDesperation()"><strong>+</strong></button>
+		<button onclick="if(parseInt(desperation.innerText) != 1){desperation.innerText = parseInt(desperation.innerText) - 1;}"><strong>-</strong></button> <h2 id="desperation">1</h2> <button onclick="if(parseInt(desperation.innerText) != 5){desperation.innerText = parseInt(desperation.innerText) + 1;}"><strong>+</strong></button>
 		<br><br><label for="applyDesperation">Apply Desperation? </label><input type="checkbox" id="applyDesperation">
-		<br><br><button onclick="displayRoll(rollDice(parseInt(pool.innerText)))">Roll</button><br><br>
-		<table></table>
+		<br><br><button onclick="displayRoll()">Roll</button><br><br>
+		<table id="resultsTable"></table>
 		<footer>
 			<a href="https://www.paradoxinteractive.com/games/world-of-darkness/community/dark-pack-agreement">
 				<img src="https://images.ctfassets.net/u73tyf0fa8v1/3oBTHBZk9XmfcBlUPylvFh/673e4a6b14566548c03424ddf627b944/darkpack_logo2.png" alt="Dark Pack logo" width="100">

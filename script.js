@@ -1,49 +1,58 @@
 function rollDice(pool){
-	const result = [];
-	if(applyDesperation.checked){
-		pool = pool + parseInt(desperation.innerText);
-	}
+	const results = [];
 	for(let i = 0; i < pool; i++){
-		result.push(Math.floor(Math.random() * 10));
+		results.push(Math.floor(Math.random() * 10) + 1);
 	}
-	return result;
+	return results;
 }
 
-function displayRoll(result){
-	const cells = document.querySelectorAll("td");
-	let desperationCount = 0;
-	if(applyDesperation.checked){
-		desperationCount = parseInt(desperation.innerText);
+function convertResults(results, desperationDice){
+	const convertedResults = [];
+	for(let i = 0; i < desperationDice && results.length != 0; i++){
+		let die = results.pop();
+		if(die > 5){
+			convertedResults[i] = "success";
+			if(die == 10){
+				convertedResults[i] = "critical";
+			}
+		}
+		if(die < 6){
+			convertedResults[i] = "failure";
+			if(die == 1){
+				convertedResults[i] = "despair";
+			}
+		}
 	}
+	while(results.length != 0){
+		let die = results.pop();
+		if(die > 5){
+			if(die == 10){
+				convertedResults.push("critical");
+			}else{
+				convertedResults.push("success");
+			}
+		}
+		if(die < 6){
+			convertedResults.push("failure");
+		}
+	}
+	console.log(convertedResults)
+	return convertedResults;
+}
+
+function displayRoll(){
+	let desperationDice = 0;
+	if(applyDesperation.checked){
+		desperationDice = parseInt(desperation.innerText);
+	}
+	let cells = document.querySelectorAll("td");
 	for(let i = 0; i < cells.length; i++){
 		cells[i].remove();
 	}
-	for(let i = 0; i < desperationCount && result.length != 0; i++){
-
-	}
-	while(result.length != 0){
-
-	}
-}
-
-function increasePool(){
-	pool.innerText = parseInt(pool.innerText) + 1;
-}
-
-function decreasePool(){
-	if(parseInt(pool.innerText) != 1){
-		pool.innerText = parseInt(pool.innerText) - 1;
-	}
-}
-
-function increaseDesperation(){
-	if(parseInt(desperation.innerText) != 5){
-		desperation.innerText = parseInt(desperation.innerText) + 1;
-	}
-}
-
-function decreaseDesperation(){
-	if(parseInt(desperation.innerText) != 1){
-		desperation.innerText = parseInt(desperation.innerText) - 1;
+	cells = convertResults(rollDice(parseInt(pool.innerText) + desperationDice), desperationDice);
+	while(cells.length != 0){
+		let cell = document.createElement("td")
+		cell.innerHTML = '<img class="icon" src="' + cells.pop() + '.svg">'
+		resultsTable.appendChild(cell)
 	}
 }

@@ -17,17 +17,19 @@ button{
 	height: 5em;
 }
 table{
-	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
 }
 footer{
 	text-align: end;
 	position: absolute;
 	bottom: 0;
 	right: 0;
+	z-index: -1;
 }
 .icon{
-	align-self: center;
 	width: auto;
 	height: 3em;
 	filter: invert(1);
+	padding: 0.5em;
 }
