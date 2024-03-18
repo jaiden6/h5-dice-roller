@@ -1,3 +1,4 @@
+// Returns an array of random integers from 1-10 with length pool
 function rollDice(pool){
 	const results = [];
 	for(let i = 0; i < pool; i++){
@@ -6,20 +7,21 @@ function rollDice(pool){
 	return results;
 }
 
-function convertResults(results, desperationDice){
-	const convertedResults = [];
+// Accepts an array of random integers 1-10 and number of Desperation dice, returns an array of equal size with integers interpreted into successes, criticals, failures, or despair/overreach
+function interpretResults(results, desperationDice){
+	const interpretedResults = [];
 	for(let i = 0; i < desperationDice && results.length != 0; i++){
 		let die = results.pop();
 		if(die > 5){
-			convertedResults[i] = "success";
+			interpretedResults[i] = "success";
 			if(die == 10){
-				convertedResults[i] = "critical";
+				interpretedResults[i] = "critical";
 			}
 		}
 		if(die < 6){
-			convertedResults[i] = "failure";
+			interpretedResults[i] = "failure";
 			if(die == 1){
-				convertedResults[i] = "despair";
+				interpretedResults[i] = "despair";
 			}
 		}
 	}
@@ -27,32 +29,59 @@ function convertResults(results, desperationDice){
 		let die = results.pop();
 		if(die > 5){
 			if(die == 10){
-				convertedResults.push("critical");
+				interpretedResults.push("critical");
 			}else{
-				convertedResults.push("success");
+				interpretedResults.push("success");
 			}
 		}
 		if(die < 6){
-			convertedResults.push("failure");
+			interpretedResults.push("failure");
 		}
 	}
-	console.log(convertedResults)
-	return convertedResults;
+	return interpretedResults;
 }
 
+// Calls rollDice into interpretResults, renders dice icons and successes
 function displayRoll(){
 	let desperationDice = 0;
 	if(applyDesperation.checked){
 		desperationDice = parseInt(desperation.innerText);
 	}
-	let cells = document.querySelectorAll("td");
+	const cells = document.querySelectorAll("td");
 	for(let i = 0; i < cells.length; i++){
 		cells[i].remove();
 	}
-	cells = convertResults(rollDice(parseInt(pool.innerText) + desperationDice), desperationDice);
-	while(cells.length != 0){
+	const results = interpretResults(rollDice(parseInt(pool.innerText) + desperationDice), desperationDice);
+	let successCount = 0;
+	let criticalCount = 0;
+	let despair = false;
+	while(results.length != 0){
+		let die = results.pop()
+		if(die == "success"){
+			successCount++;
+		}
+		if(die == "critical"){
+			criticalCount++;
+		}
+		if(die == "despair"){
+			despair = true;
+		}
 		let cell = document.createElement("td")
-		cell.innerHTML = '<img class="icon" src="' + cells.pop() + '.svg">'
+		cell.innerHTML = '<img class="icon" src="' + die + '.svg">'
 		resultsTable.appendChild(cell)
+	}
+	if(criticalCount > 1){
+		criticalCount *= criticalCount;
+	}
+	successCount += criticalCount;
+	resultsText.innerText = successCount + " successes"
+	if(successCount == 1){
+		resultsText.innerText = "1 success"
+	}
+	if(despair){
+		resultsText.innerText += ", Despair or Overreach"
+	}
+	if(criticalCount > 1){
+		resultsText.innerText += ", potential critical"
 	}
 }
